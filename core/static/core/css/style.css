@@ -26,3 +26,31 @@ html{
 .card{
     cursor: pointer;
 }
+
+.store-banner{
+    background-color: #d6d6d3;
+    padding: 1.6rem 0;
+    text-align: center;
+    color: var(--black-color);
+}
+
+a{
+    text-decoration: none;
+}
+.list-menu {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+
+.list-menu li {
+    margin-bottom: 5px;
+    list-style: none;
+  }
+.list-menu a {
+    color: #343a40;
+  }
+.list-menu a:hover {
+    color: #3167eb;
+  }
+  
