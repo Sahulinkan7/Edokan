@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+    <div class="row justify-between mt-5">
+        {% for category in categories %}
+        <div class="col-md-2 mx-2">
+            <div class="card shadow p-2">
+                <div class="card-body">
+                        <img class="card-img-top" src="{{category.cat_image.url}}" alt="">
+                </div>
+                <div class="card-footer">
+                    <h5 class="card-text text-center">{{category.category_name}}</h5>
+                </div>
+                
+            </div>
+        </div>
+            
+        {% endfor %}
+    </div>
+    
+{% endblock content %}
+
+
