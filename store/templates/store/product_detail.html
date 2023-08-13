@@ -12,15 +12,33 @@
                             <img src="{{ product.images.url }}" alt="" class="card-img-top">
                         </div>
                         <div class="col-md-6">
-                            <p class="card-text fw-bold">{{product.product_name}}</p>
-                            <p class="card-text fw-bold">R {{product.price}} only </p>
-                            <p class="card-text fw-bold">{{product.description}}</p>
-                            {% if product.stock %}
-                                <a href=""><button class="btn btn-primary">Add to Cart</button></a>
-                            {% else %}
-                                <h5 class="text-danger">Out of stock</h5>
-                            {% endif %}
-                            
+                            <form action="{% url 'add_to_cart' product.id %}" method="post">
+                                {% csrf_token %}
+                                <p class="card-text fw-bold">{{product.product_name}}</p>
+                                <p class="card-text fw-bold">R {{product.price}} only </p>
+                                <p class="card-text text-muted">{{product.description}}</p>
+                                <hr>
+                                <h6>Choose size</h6>
+                                <select name="color" class="form-control mb-1" required>
+                                    <option value="" disabled selected>Select</option>
+                                    {% for i in product.variation_set.colors %}
+                                        <option value="{{i.variation_value | lower}}">{{i.variation_value}}</option>
+                                    {% endfor %}
+                                </select>
+                                <h6>choose size</h6>
+                                <select name="size" class="form-control mb-2" required>
+                                    <option value="" disabled selected>select</option>
+                                    {% for i in product.variation_set.sizes %}
+                                        <option value="{{i.variation_value | lower}}">{{i.variation_value}}</option>
+                                    {% endfor %}
+                                </select>
+                               
+                                {% if product.stock %}
+                                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                                {% else %}
+                                    <h5 class="text-danger">Out of stock</h5>
+                                {% endif %}
+                            </form>                            
                         </div>
                     </div>
                 </div>

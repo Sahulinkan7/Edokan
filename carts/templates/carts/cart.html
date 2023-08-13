@@ -1,0 +1,89 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+
+    <div class="container">
+        
+        <div class="row mt-5">
+            {% if not cart_items %}
+            <div class="row empty-cart align-items-center">
+                <div class="text-center">
+                    <h3>Aww Your cart is Empty! </h3>
+                    <a href="{% url 'store' %}" class="text-center btn btn-primary">Start Shopping</a>
+                </div>
+                
+            </div>
+            {% else %}
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <td class="text-muted">Product</td>
+                                    <td class="text-muted">Quantity</td>
+                                    <td class="text-muted">Price</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {% for cart_item in cart_items %}
+                                <tr>
+                                    <td>
+                                        <figure class="itemside align-items-center">
+                                            <div class="aside">
+                                                <img src="{{ cart_item.product.images.url }}" class="img-sm">
+                                            </div>
+                                            <figcaption class="info">
+                                                <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }} </a>
+                                                <p class="small text-muted">
+                                                    {% if cart_item.variation.all %}
+                                                        {% for item in cart_item.variation.all %}
+                                                            {{item.variation_category | capfirst}} : {{item.variation_value | capfirst}} <br>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </p>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    
+                                    <td>
+                                        <div class="input-group input-spinner">
+                                            <a href="{% url 'remove_from_cart' cart_item.product.id %}" type="button" class="btn btn-light">-</a>
+                                            <input type="text" class="form-control" value={{ cart_item.quantity }} disabled>
+                                            <a href="{% url 'add_to_cart' cart_item.product.id %}" type="button" class="btn btn-light">+</a>
+                                        </div>
+                                        
+                                    </td>
+                                    <td><p>{{ cart_item.sub_total }}</p></td>
+                                    <td><a href="{% url 'remove_cart' cart_item.product.id %}"><button class="btn btn-danger">Remove</button></a></td>
+                                </tr>
+                                    
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-text">Sub Total : {{ total }} </h6>
+                        <h6 class="card-text">Tax       : {{ tax }}</h6>
+                        <hr>
+                        <h6>Total : {{ grand_total }}</h6>
+                        <a href="" class="mx-2 btn btn-primary ms-5 mb-2">Check out</a>
+                        <a href="{% url 'store' %}" class="mx-2 btn btn-secondary ms-auto">Continue Shopping</a>
+                    </div>
+                    
+                </div>
+            </div>
+            {% endif %}
+            
+        </div>
+    </div>
+
+{% endblock content %}
+
+
