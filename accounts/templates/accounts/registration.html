@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show " role="alert">
+                <strong class="text-success">{{message}}</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show " role="alert">
+                <strong class="text-danger">{{error}}</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row my-2 p-2 justify-content-center">
+            <div class="col-md-6 my-4 px-5 py-4 shadow">
+                <h3 class="text-center mb-3">Create your Account here ! </h3>
+                <form action="" method="post" novalidate >
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for field in form %}
+                        <div class="col-md-6 mb-1">
+                            {{field.label_tag}}
+                            {{field}} 
+                            <small class="text-danger">{{field.errors | striptags}}</small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <input type="submit" value="Create Account" class="mt-2 form-control btn btn-primary">                       
+                </form>
+            </div>
+        </div>
+        <p class="text-center">Have an account ? <a href="{% url 'login' %}">Login</a></p>
+        
+    </div>
+    
+   
+
+{% endblock content %}
+
+
